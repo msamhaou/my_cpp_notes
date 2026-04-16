@@ -1,0 +1,17 @@
+
+add_executable(mapped_file_tests
+    MemoryMapFileTest.cpp
+)
+
+target_link_libraries(mapped_file_tests
+    PRIVATE
+        MemoryMapFile
+        LineReader
+        GTest::gtest_main
+)
+
+file(COPY ${CMAKE_SOURCE_DIR}/test_file
+     DESTINATION ${CMAKE_BINARY_DIR})
+
+include(GoogleTest)
+gtest_discover_tests(mapped_file_tests)

@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.16)
+project(1BRC CXX)
+
+enable_testing()
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# --- Set up google tests --------------------
+include(FetchContent)
+
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/release-1.12.1.zip
+)
+
+FetchContent_MakeAvailable(googletest)
+
+# ---- Library targets ----------------------
+
+add_library(LineReader
+    LineReader/LineReader.cpp
+    LineReader/LineReader.hpp
+)
+target_include_directories(LineReader PUBLIC LineReader)
+
+
+add_library(MemoryMapFile
+    MemoryMapFile/MemoryMapFile.cpp
+    MemoryMapFile/MemoryMapFile.hpp
+)
+target_include_directories(MemoryMapFile PUBLIC MemoryMapFile)
+
+
+target_link_libraries(LineReader PUBLIC MemoryMapFile)
+#--- Main exec -------------------
+
+add_executable(${PROJECT_NAME} main.cpp)
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        LineReader
+        MemoryMapFile
+)
+
+add_subdirectory(tests)

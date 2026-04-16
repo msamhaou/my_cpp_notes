@@ -6,8 +6,9 @@ class LineReader{
 private: 
     MemoryMapFile&  mapped_file;
     int             readed_bytes;
+    static int      all_readed;
 public:
-    std::string     remaining;
+    static std::string     remaining;
     LineReader( MemoryMapFile &_mapped_file);
     std::optional<std::string> read_line();
 };

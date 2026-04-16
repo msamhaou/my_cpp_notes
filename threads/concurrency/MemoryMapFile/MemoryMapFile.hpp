@@ -7,19 +7,22 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <sys/types.h>
-
+#include <stdexcept>
+#include <cstring>
+#include <cerrno>
 class MemoryMapFile{
 private:
     void *          addr;
     int             fd;
     size_t          length;
-    unsigned int    offset;
     size_t          file_size;
     size_t          page_len;
     void            set_size_file(const int & fd);
     char*           buffer;
 public:
+    unsigned int    offset;
     bool            eof;
+    unsigned int    readed_length;
     MemoryMapFile( std::string filename );
     ~MemoryMapFile();
     char * read();

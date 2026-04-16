@@ -3,19 +3,17 @@
 #include <LineReader.hpp>
 #include <iostream>
 #include <string_view>
+
 int main(){
-    MemoryMapFile m = MemoryMapFile(std::string("file"));
-    char * r = m.read();
-
-   std::string rr(r, m.get_length());
-
-    LineReader lineReader = LineReader(m);
-
-    std::optional<std::string> line = lineReader.read_line();
-    while (line.has_value()){
-        std::cout <<line.value() << "\n";
-        line = lineReader.read_line();
+    MemoryMapFile mapped_file("larger_file");
+    char * r = NULL;
+    while ((r = mapped_file.read())){
+    std::cout << mapped_file.readed_length << "\n";
+        
     }
 
-    std::cout << lineReader.remaining << "\n";
+    std::cout << mapped_file.eof << "\n";
+    std::cout << mapped_file.readed_length << "\n";
+    std::cout << mapped_file.get_file_size() << "\n";
+
 }
